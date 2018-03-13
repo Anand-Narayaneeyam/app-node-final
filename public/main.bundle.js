@@ -148,12 +148,16 @@ var AppGuard = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__logout_logout_component__ = __webpack_require__("./src/app/logout/logout.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__home_home_component__ = __webpack_require__("./src/app/home/home.component.ts");
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__pagenotfound_pagenotfound_component__ = __webpack_require__("./src/app/pagenotfound/pagenotfound.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__list_list_component__ = __webpack_require__("./src/app/list/list.component.ts");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__main_list_main_list_component__ = __webpack_require__("./src/app/main-list/main-list.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
 
 
 
@@ -180,7 +184,9 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_10__dashboard_dashboard_component__["a" /* DashboardComponent */],
                 __WEBPACK_IMPORTED_MODULE_11__logout_logout_component__["a" /* LogoutComponent */],
                 __WEBPACK_IMPORTED_MODULE_12__home_home_component__["a" /* HomeComponent */],
-                __WEBPACK_IMPORTED_MODULE_13__pagenotfound_pagenotfound_component__["a" /* PagenotfoundComponent */]
+                __WEBPACK_IMPORTED_MODULE_13__pagenotfound_pagenotfound_component__["a" /* PagenotfoundComponent */],
+                __WEBPACK_IMPORTED_MODULE_14__list_list_component__["a" /* ListComponent */],
+                __WEBPACK_IMPORTED_MODULE_15__main_list_main_list_component__["a" /* MainListComponent */]
             ],
             imports: [
                 __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__["a" /* BrowserModule */],
@@ -292,6 +298,9 @@ var AppService = /** @class */ (function () {
             return false;
     };
     ;
+    AppService.prototype.getUsersList = function () {
+        return this.http.post('http://localhost:5000/mainList', '');
+    };
     AppService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__angular_common_http__["a" /* HttpClient */]])
@@ -313,7 +322,7 @@ module.exports = ""
 /***/ "./src/app/dashboard/dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  dashboard works!\n</p>\n"
+module.exports = "<div class=\"row\" style=\"margin-top: 10px\">\n  <div class=\"col-sm-6\">\n    <h3>Main List</h3>\n    <app-main-list></app-main-list>\n  </div>\n  <div class=\"col-sm-6\">\n    <h3>List</h3>\n    <app-list></app-list>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -397,6 +406,73 @@ var HomeComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [])
     ], HomeComponent);
     return HomeComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/list/list.component.css":
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/list/list.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<table cellpadding=\"0\" cellspacing=\"2\">\n  <tr style=\"background-color:palegoldenrod\">\n    <th style=\"border-bottom:2px solid #dadada;border-right:2px solid #dadada;border-top:2px solid #dadada;border-left: 2px solid #dadada\" align=\"left\">Name</th>\n    <th style=\"border-bottom:2px solid #dadada;border-right:2px solid #dadada;border-top:2px solid #dadada;border-left: 2px solid #dadada\" align=\"left\">Gender</th>\n    <th style=\"border-bottom:2px solid #dadada;border-right:2px solid #dadada;border-top:2px solid #dadada;border-left: 2px solid #dadada\" align=\"left\">Date of Birth</th>\n    <th style=\"border-bottom:2px solid #dadada;border-right:2px solid #dadada;border-top:2px solid #dadada;border-left: 2px solid #dadada\" align=\"left\">Phone Number</th>\n    <th style=\"border-bottom:2px solid #dadada;border-right:2px solid #dadada;border-top:2px solid #dadada;border-left: 2px solid #dadada\" align=\"left\">Edit</th>\n    <th style=\"border-bottom:2px solid #dadada;border-right:2px solid #dadada;border-top:2px solid #dadada;border-left: 2px solid #dadada\" align=\"left\">Delete</th>\n  </tr>\n<tr *ngFor=\"let el of dataArray; let i = index\"  [ngStyle]=\"i%2!=0?{'background-color':'whitesmoke'}:{'background-color':'white'}\">\n  <td style=\"border-bottom:2px solid #dadada;border-right:2px solid #dadada;border-top:2px solid #dadada;border-left: 2px solid #dadada\" align=\"left\">{{el.firstName}}</td>\n  <td style=\"border-bottom:2px solid #dadada;border-right:2px solid #dadada;border-top:2px solid #dadada;border-left: 2px solid #dadada\" align=\"left\">{{el.gender}}</td>\n  <td style=\"border-bottom:2px solid #dadada;border-right:2px solid #dadada;border-top:2px solid #dadada;border-left: 2px solid #dadada\" align=\"left\">{{el.dob}}</td>\n  <td style=\"border-bottom:2px solid #dadada;border-right:2px solid #dadada;border-top:2px solid #dadada;border-left: 2px solid #dadada\" align=\"left\">{{el.phoneNumber}}</td>\n  <td style=\"border-bottom:2px solid #dadada;border-right:2px solid #dadada;border-top:2px solid #dadada;border-left: 2px solid #dadada;text-align: center\" align=\"left\">\n    <a (click)=\"editClick(data)\"> <i class=\"fa fa-pencil\" aria-hidden=\"true\"></i></a>\n  </td>\n    <td style=\"border-bottom:2px solid #dadada;border-right:2px solid #dadada;border-top:2px solid #dadada;border-left: 2px solid #dadada;text-align: center\" align=\"left\">\n      <a (click)=\"deleteClick(el._id)\"> <i class=\"fa fa-trash-o\" aria-hidden=\"true\"></i></a>\n    </td>\n</tr>\n</table>\n"
+
+/***/ }),
+
+/***/ "./src/app/list/list.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ListComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_service__ = __webpack_require__("./src/app/app.service.ts");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var ListComponent = /** @class */ (function () {
+    function ListComponent(appService) {
+        this.appService = appService;
+    }
+    ListComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        debugger;
+        this.appService.getUsersList().subscribe(function (data) {
+            debugger;
+            if (data['Status'] == "success")
+                _this.dataArray = data["Data"];
+            else
+                alert("No Data Exits...");
+        });
+    };
+    ListComponent.prototype.editClick = function (data) {
+    };
+    ListComponent.prototype.deleteClick = function (id) {
+    };
+    ListComponent = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'app-list',
+            template: __webpack_require__("./src/app/list/list.component.html"),
+            styles: [__webpack_require__("./src/app/list/list.component.css")],
+            providers: [__WEBPACK_IMPORTED_MODULE_1__app_service__["a" /* AppService */]]
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__app_service__["a" /* AppService */]])
+    ], ListComponent);
+    return ListComponent;
 }());
 
 
@@ -533,6 +609,56 @@ var LogoutComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__app_service__["a" /* AppService */], __WEBPACK_IMPORTED_MODULE_2__angular_router__["a" /* Router */], __WEBPACK_IMPORTED_MODULE_0__angular_core__["k" /* ChangeDetectorRef */]])
     ], LogoutComponent);
     return LogoutComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/main-list/main-list.component.css":
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/main-list/main-list.component.html":
+/***/ (function(module, exports) {
+
+module.exports = "<div id=\"container\" class=\"container\">\n    <!-- <h3 align=\"center\">Sign Up</h3> -->\n    <form class=\"justify-content-center\" #editDetails=\"ngForm\" (ngSubmit)=\"onEditDetails(editDetails.value)\">\n  \n      <div class=\"form-group\" style=\"display: inline-flex;\">\n        <label for=\"Name\" style=\"margin-top: 10px;\">Name:</label>\n        <input type=\"text\" class=\"form-control\" style=\"margin-left: 5px;\" placeholder=\"First Name\" name=\"firstName\" ngModel required>\n        <input type=\"text\" class=\"form-control\" style=\"margin-left: 8px;\" name=\"lastName\" placeholder=\"Last Name\" ngModel required>\n      </div>\n  \n      <div>\n        <label for=\"gender\">Gender:</label>\n        <div style=\"margin-left: 60px;\" class=\"form-group\">\n          <input type=\"radio\" value=\"Male\" name=\"gender\" ngModel checked=\"checked\" required> Male\n          <br>\n          <input type=\"radio\" value=\"Female\" name=\"gender\" ngModel required> Female\n          <br>\n        </div>\n      </div>\n  \n      <div class=\"form-group\">\n        <label for=\"gender\">Date of Birth:</label>\n        <input type=\"date\" name=\"dob\" ngModel required>\n      </div>\n  \n      <div class=\"form-group\">\n        <label for=\"gender\">Phone Number:</label>\n        <input type=\"number\" class=\"form-control\" name=\"phoneNumber\" ngModel required>\n      </div>\n  \n      <button class=\"btn btn-default\" type=\"submit\" [disabled]=\"!editDetails.valid\">\n        <i class=\"fa fa-floppy-o\"></i>\n        Save Changes\n      </button>\n      <button class=\"btn btn-default\" type=\"button\" (click)=\"resetClick(editDetails)\">\n        <i class=\"fa fa-repeat\"></i>\n        Reset\n      </button>\n    </form>\n  </div>"
+
+/***/ }),
+
+/***/ "./src/app/main-list/main-list.component.ts":
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MainListComponent; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var MainListComponent = /** @class */ (function () {
+    function MainListComponent() {
+    }
+    MainListComponent.prototype.ngOnInit = function () {
+    };
+    MainListComponent = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
+            selector: 'app-main-list',
+            template: __webpack_require__("./src/app/main-list/main-list.component.html"),
+            styles: [__webpack_require__("./src/app/main-list/main-list.component.css")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], MainListComponent);
+    return MainListComponent;
 }());
 
 

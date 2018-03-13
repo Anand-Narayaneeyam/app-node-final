@@ -73,3 +73,22 @@ app.post('/login', (req, res) => {
     });
 });
 
+app.post('/mainList', (req, res) => {
+    signUpModel.find({}, (error, data) => {
+        console.log("test",data);
+        if (data.length > 0) { 
+            for (let index = 0; index < data.length; index++) {
+                data[index]['password'] = "********";              
+            }
+            res.send({ "Status": "success", "Data": data });
+        }
+        else
+            res.send({ "Status": "failed" });
+    });
+});
+
+app.get('/dashboard', (req, res) => {
+ res.send("dashboard");
+});
+
+
