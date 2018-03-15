@@ -296,12 +296,12 @@ var AppService = /** @class */ (function () {
         this.http = http;
     }
     AppService.prototype.signUp = function (data) {
-        // return this.http.post('http://localhost:5000/signup', data);
-        return this.http.post('https://mean-app-anand.herokuapp.com/signup', data);
+        return this.http.post('http://localhost:5000/signup', data);
+        // return this.http.post('https://mean-app-anand.herokuapp.com/signup', data);
     };
     AppService.prototype.login = function (data) {
-        // return this.http.post('http://localhost:5000/login', data);
-        return this.http.post('https://mean-app-anand.herokuapp.com/login', data);
+        return this.http.post('http://localhost:5000/login', data);
+        // return this.http.post('https://mean-app-anand.herokuapp.com/login', data);
     };
     AppService.prototype.getsession = function () {
         if (sessionStorage.getItem('token') != null)
@@ -311,8 +311,8 @@ var AppService = /** @class */ (function () {
     };
     ;
     AppService.prototype.getUsersList = function () {
-        // return this.http.post('http://localhost:5000/mainList','');
-        return this.http.post('https://mean-app-anand.herokuapp.com/mainList', '');
+        return this.http.post('http://localhost:5000/mainList', '');
+        // return this.http.post('https://mean-app-anand.herokuapp.com/mainList','');
     };
     AppService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
@@ -335,7 +335,7 @@ module.exports = ""
 /***/ "./src/app/dashboard/dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\" style=\"margin-top: 10px\">\n  <div class=\"col-sm-6\">\n    <h3>Main List</h3>\n    <app-main-list></app-main-list>\n  </div>\n  <div class=\"col-sm-6\">\n    <h3>List</h3>\n    <app-list></app-list>\n  </div>\n</div>"
+module.exports = "<div class=\"row\" style=\"margin-top: 10px\">\n  <div class=\"col-sm-6\">\n    <h3>Main List</h3>\n    <app-main-list *ngIf=\"isShow\" [dataSet]=\"dataOutput\"></app-main-list>\n  </div>\n  <div class=\"col-sm-6\">\n    <h3>List</h3>\n    <app-list (editEmit)=editClick($event)></app-list>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -357,8 +357,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var DashboardComponent = /** @class */ (function () {
     function DashboardComponent() {
+        this.isShow = false;
     }
     DashboardComponent.prototype.ngOnInit = function () {
+    };
+    DashboardComponent.prototype.editClick = function (event) {
+        debugger;
+        this.dataOutput = event["Data"];
+        this.isShow = true;
     };
     DashboardComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
@@ -435,7 +441,7 @@ module.exports = ""
 /***/ "./src/app/list/list.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<table cellpadding=\"0\" cellspacing=\"2\">\n  <tr style=\"background-color:palegoldenrod\">\n    <th style=\"border-bottom:2px solid #dadada;border-right:2px solid #dadada;border-top:2px solid #dadada;border-left: 2px solid #dadada\" align=\"left\">Name</th>\n    <th style=\"border-bottom:2px solid #dadada;border-right:2px solid #dadada;border-top:2px solid #dadada;border-left: 2px solid #dadada\" align=\"left\">Gender</th>\n    <th style=\"border-bottom:2px solid #dadada;border-right:2px solid #dadada;border-top:2px solid #dadada;border-left: 2px solid #dadada\" align=\"left\">Date of Birth</th>\n    <th style=\"border-bottom:2px solid #dadada;border-right:2px solid #dadada;border-top:2px solid #dadada;border-left: 2px solid #dadada\" align=\"left\">Phone Number</th>\n    <th style=\"border-bottom:2px solid #dadada;border-right:2px solid #dadada;border-top:2px solid #dadada;border-left: 2px solid #dadada\" align=\"left\">Edit</th>\n    <th style=\"border-bottom:2px solid #dadada;border-right:2px solid #dadada;border-top:2px solid #dadada;border-left: 2px solid #dadada\" align=\"left\">Delete</th>\n  </tr>\n<tr *ngFor=\"let el of dataArray; let i = index\"  [ngStyle]=\"i%2!=0?{'background-color':'whitesmoke'}:{'background-color':'white'}\">\n  <td style=\"border-bottom:2px solid #dadada;border-right:2px solid #dadada;border-top:2px solid #dadada;border-left: 2px solid #dadada\" align=\"left\">{{el.firstName}}</td>\n  <td style=\"border-bottom:2px solid #dadada;border-right:2px solid #dadada;border-top:2px solid #dadada;border-left: 2px solid #dadada\" align=\"left\">{{el.gender}}</td>\n  <td style=\"border-bottom:2px solid #dadada;border-right:2px solid #dadada;border-top:2px solid #dadada;border-left: 2px solid #dadada\" align=\"left\">{{el.dob}}</td>\n  <td style=\"border-bottom:2px solid #dadada;border-right:2px solid #dadada;border-top:2px solid #dadada;border-left: 2px solid #dadada\" align=\"left\">{{el.phoneNumber}}</td>\n  <td style=\"border-bottom:2px solid #dadada;border-right:2px solid #dadada;border-top:2px solid #dadada;border-left: 2px solid #dadada;text-align: center\" align=\"left\">\n    <a (click)=\"editClick(data)\"> <i class=\"fa fa-pencil\" aria-hidden=\"true\"></i></a>\n  </td>\n    <td style=\"border-bottom:2px solid #dadada;border-right:2px solid #dadada;border-top:2px solid #dadada;border-left: 2px solid #dadada;text-align: center\" align=\"left\">\n      <a (click)=\"deleteClick(el._id)\"> <i class=\"fa fa-trash-o\" aria-hidden=\"true\"></i></a>\n    </td>\n</tr>\n</table>\n"
+module.exports = "<table cellpadding=\"0\" cellspacing=\"2\">\n  <tr style=\"background-color:palegoldenrod\">\n    <th style=\"border-bottom:2px solid #dadada;border-right:2px solid #dadada;border-top:2px solid #dadada;border-left: 2px solid #dadada\" align=\"left\">Name</th>\n    <th style=\"border-bottom:2px solid #dadada;border-right:2px solid #dadada;border-top:2px solid #dadada;border-left: 2px solid #dadada\" align=\"left\">Gender</th>\n    <th style=\"border-bottom:2px solid #dadada;border-right:2px solid #dadada;border-top:2px solid #dadada;border-left: 2px solid #dadada\" align=\"left\">Date of Birth</th>\n    <th style=\"border-bottom:2px solid #dadada;border-right:2px solid #dadada;border-top:2px solid #dadada;border-left: 2px solid #dadada\" align=\"left\">Phone Number</th>\n    <th style=\"border-bottom:2px solid #dadada;border-right:2px solid #dadada;border-top:2px solid #dadada;border-left: 2px solid #dadada\" align=\"left\">Edit</th>\n    <th style=\"border-bottom:2px solid #dadada;border-right:2px solid #dadada;border-top:2px solid #dadada;border-left: 2px solid #dadada\" align=\"left\">Delete</th>\n  </tr>\n<tr *ngFor=\"let el of dataArray; let i = index\"  [ngStyle]=\"i%2!=0?{'background-color':'whitesmoke'}:{'background-color':'white'}\">\n  <td style=\"border-bottom:2px solid #dadada;border-right:2px solid #dadada;border-top:2px solid #dadada;border-left: 2px solid #dadada\" align=\"left\">{{el.firstName}}, {{el.lastName}}</td>\n  <td style=\"border-bottom:2px solid #dadada;border-right:2px solid #dadada;border-top:2px solid #dadada;border-left: 2px solid #dadada\" align=\"left\">{{el.gender}}</td>\n  <td style=\"border-bottom:2px solid #dadada;border-right:2px solid #dadada;border-top:2px solid #dadada;border-left: 2px solid #dadada\" align=\"left\">{{el.dob}}</td>\n  <td style=\"border-bottom:2px solid #dadada;border-right:2px solid #dadada;border-top:2px solid #dadada;border-left: 2px solid #dadada\" align=\"left\">{{el.phoneNumber}}</td>\n  <td style=\"border-bottom:2px solid #dadada;border-right:2px solid #dadada;border-top:2px solid #dadada;border-left: 2px solid #dadada;text-align: center\" align=\"left\">\n    <a (click)=\"editClick(el)\"> <i class=\"fa fa-pencil\" aria-hidden=\"true\"></i></a>\n  </td>\n    <td style=\"border-bottom:2px solid #dadada;border-right:2px solid #dadada;border-top:2px solid #dadada;border-left: 2px solid #dadada;text-align: center\" align=\"left\">\n      <a (click)=\"deleteClick(el._id)\"> <i class=\"fa fa-trash-o\" aria-hidden=\"true\"></i></a>\n    </td>\n</tr>\n</table>\n"
 
 /***/ }),
 
@@ -460,22 +466,30 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var ListComponent = /** @class */ (function () {
     function ListComponent(appService) {
         this.appService = appService;
+        this.editEmit = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */]();
     }
     ListComponent.prototype.ngOnInit = function () {
         var _this = this;
         debugger;
         this.appService.getUsersList().subscribe(function (data) {
             debugger;
-            if (data['Status'] == "success")
+            if (data['Status'] == "success") {
                 _this.dataArray = data["Data"];
+                _this.editEmit.emit({ "Data": data["Data"][0] });
+            }
             else
                 alert("No Data Exits...");
         });
     };
     ListComponent.prototype.editClick = function (data) {
+        this.editEmit.emit({ "Data": data });
     };
     ListComponent.prototype.deleteClick = function (id) {
     };
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["P" /* Output */])(),
+        __metadata("design:type", Object)
+    ], ListComponent.prototype, "editEmit", void 0);
     ListComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'app-list',
@@ -535,13 +549,11 @@ var LoginComponent = /** @class */ (function () {
     };
     LoginComponent.prototype.onLogin = function (event) {
         var _this = this;
-        debugger;
         var that = this;
         this.appService.login(event).subscribe(function (data) {
-            debugger;
             if (data["Status"] == "success") {
                 sessionStorage.setItem("token", data["session"][0]['loginName']);
-                alert(" Login is successfull....");
+                // alert(" Login is successfull....");
                 _this.router.navigate(['/dashboard']);
             }
             else
@@ -638,7 +650,7 @@ module.exports = ""
 /***/ "./src/app/main-list/main-list.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"container\" class=\"container\">\n    <!-- <h3 align=\"center\">Sign Up</h3> -->\n    <form class=\"justify-content-center\" #editDetails=\"ngForm\" (ngSubmit)=\"onEditDetails(editDetails.value)\">\n  \n      <div class=\"form-group\" style=\"display: inline-flex;\">\n        <label for=\"Name\" style=\"margin-top: 10px;\">Name:</label>\n        <input type=\"text\" class=\"form-control\" style=\"margin-left: 5px;\" placeholder=\"First Name\" name=\"firstName\" ngModel required>\n        <input type=\"text\" class=\"form-control\" style=\"margin-left: 8px;\" name=\"lastName\" placeholder=\"Last Name\" ngModel required>\n      </div>\n  \n      <div>\n        <label for=\"gender\">Gender:</label>\n        <div style=\"margin-left: 60px;\" class=\"form-group\">\n          <input type=\"radio\" value=\"Male\" name=\"gender\" ngModel checked=\"checked\" required> Male\n          <br>\n          <input type=\"radio\" value=\"Female\" name=\"gender\" ngModel required> Female\n          <br>\n        </div>\n      </div>\n  \n      <div class=\"form-group\">\n        <label for=\"gender\">Date of Birth:</label>\n        <input type=\"date\" name=\"dob\" ngModel required>\n      </div>\n  \n      <div class=\"form-group\">\n        <label for=\"gender\">Phone Number:</label>\n        <input type=\"number\" class=\"form-control\" name=\"phoneNumber\" ngModel required>\n      </div>\n  \n      <button class=\"btn btn-default\" type=\"submit\" [disabled]=\"!editDetails.valid\">\n        <i class=\"fa fa-floppy-o\"></i>\n        Save Changes\n      </button>\n      <button class=\"btn btn-default\" type=\"button\" (click)=\"resetClick(editDetails)\">\n        <i class=\"fa fa-repeat\"></i>\n        Reset\n      </button>\n    </form>\n  </div>"
+module.exports = "<div id=\"container\" class=\"container\">\n    <!-- <h3 align=\"center\">Sign Up</h3> -->\n    <form class=\"justify-content-center\" #editDetails=\"ngForm\" (ngSubmit)=\"onEditDetails(editDetails.value)\">\n  \n      <div class=\"form-group\" style=\"display: inline-flex;\">\n        <label for=\"Name\" style=\"margin-top: 10px;\">Name:</label>\n        <input type=\"text\" class=\"form-control\" style=\"margin-left: 5px;\" placeholder=\"First Name\" name=\"firstName\" [(ngModel)]=\"firstName\" ngModel required>\n        <input type=\"text\" class=\"form-control\" style=\"margin-left: 8px;\" name=\"lastName\" placeholder=\"Last Name\" [(ngModel)]=\"lastName\" ngModel required>\n      </div>\n  \n      <div>\n        <label for=\"gender\">Gender:</label>\n        <div style=\"margin-left: 60px;\" class=\"form-group\">\n          <input type=\"radio\" value=\"Male\" name=\"gender\" [(ngModel)]= \"gender\" required> Male\n          <br>\n          <input type=\"radio\" value=\"Female\" name=\"gender\" [(ngModel)]=\"gender\" required> Female\n          <br>\n        </div>\n      </div>\n  \n      <div class=\"form-group\">\n        <label for=\"gender\">Date of Birth:</label>\n        <input type=\"date\" name=\"dob\" [(ngModel)]=\"dob\" ngModel required>\n      </div>\n  \n      <div class=\"form-group\">\n        <label for=\"gender\">Phone Number:</label>\n        <input type=\"number\" class=\"form-control\" name=\"phoneNumber\" [(ngModel)]=\"phoneNumber\" name=\"phoneNumber\" ngModel required>\n      </div>\n  \n      <button class=\"btn btn-default\" type=\"submit\" [disabled]=\"!editDetails.valid\">\n        <i class=\"fa fa-floppy-o\"></i>\n        Save Changes\n      </button>\n      <button class=\"btn btn-default\" type=\"button\" (click)=\"resetClick(editDetails)\">\n        <i class=\"fa fa-repeat\"></i>\n        Reset\n      </button>\n    </form>\n  </div>"
 
 /***/ }),
 
@@ -660,9 +672,41 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var MainListComponent = /** @class */ (function () {
     function MainListComponent() {
+        this.firstName = "";
+        this.lastName = "";
+        this.dob = "";
+        this.phoneNumber = "";
+        this.gender = "";
     }
     MainListComponent.prototype.ngOnInit = function () {
     };
+    MainListComponent.prototype.ngOnChanges = function (changes) {
+        if (changes != undefined) {
+            debugger;
+            if (changes.dataSet.currentValue) {
+                this.firstName = changes.dataSet.currentValue.firstName;
+                this.lastName = changes.dataSet.currentValue.lastName;
+                this.dob = changes.dataSet.currentValue.dob;
+                this.phoneNumber = changes.dataSet.currentValue.phoneNumber;
+                this.gender = changes.dataSet.currentValue.gender;
+            }
+        }
+    };
+    MainListComponent.prototype.ngAfterViewInit = function () {
+    };
+    MainListComponent.prototype.onEditDetails = function (event) {
+    };
+    MainListComponent.prototype.resetClick = function (data) {
+        if (data != null)
+            data.reset();
+    };
+    MainListComponent.prototype.radioChange = function (event) {
+        debugger;
+    };
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["D" /* Input */])(),
+        __metadata("design:type", Object)
+    ], MainListComponent.prototype, "dataSet", void 0);
     MainListComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'app-main-list',
