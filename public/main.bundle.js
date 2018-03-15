@@ -296,10 +296,12 @@ var AppService = /** @class */ (function () {
         this.http = http;
     }
     AppService.prototype.signUp = function (data) {
-        return this.http.post('http://localhost:5000/signup', data);
+        // return this.http.post('http://localhost:5000/signup', data);
+        return this.http.post('https://mean-app-anand.herokuapp.com/signup', data);
     };
     AppService.prototype.login = function (data) {
-        return this.http.post('http://localhost:5000/login', data);
+        // return this.http.post('http://localhost:5000/login', data);
+        return this.http.post('https://mean-app-anand.herokuapp.com/login', data);
     };
     AppService.prototype.getsession = function () {
         if (sessionStorage.getItem('token') != null)
@@ -309,7 +311,8 @@ var AppService = /** @class */ (function () {
     };
     ;
     AppService.prototype.getUsersList = function () {
-        return this.http.post('http://localhost:5000/mainList', '');
+        // return this.http.post('http://localhost:5000/mainList','');
+        return this.http.post('https://mean-app-anand.herokuapp.com/mainList', '');
     };
     AppService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
