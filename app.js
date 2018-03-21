@@ -3,7 +3,7 @@ const app = express();
 const mongoose = require('mongoose');
 const signUpModel = require('./signUpModel');
 const bodyParser = require('body-parser');
-const path=require('path');
+const path = require('path');
 
 app.use(function (req, res, next) {
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -25,16 +25,16 @@ mongoose.connect('mongodb://webapp:12345678@ds155218.mlab.com:55218/sample-db').
 
 app.use(bodyParser.json());
 
-app.use(express.static(path.join(__dirname,'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.get('*',(req,res)=>{
-    res.sendfile(path.join(__dirname,'public/index.html'));
+app.get('*', (req, res) => {
+    res.sendfile(path.join(__dirname, 'public/index.html'));
 })
 
-app.get('/',(req,res)=>{
+app.get('/', (req, res) => {
 
-   res.send('Home Root');
+    res.send('Home Root');
 
 })
 
@@ -62,7 +62,7 @@ app.post('/signup', (req, res) => {
 
 app.post('/login', (req, res) => {
     signUpModel.find({ 'loginName': req.body.loginName, 'password': req.body.password }).then((data) => {
-        console.log("xxx",data);
+        console.log("xxx", data);
         if (data.length > 0) {
             if (data[0]['password'])
                 data[0]['password'] = "******";
@@ -75,10 +75,10 @@ app.post('/login', (req, res) => {
 
 app.post('/mainList', (req, res) => {
     signUpModel.find({}, (error, data) => {
-        console.log("test",data);
-        if (data.length > 0) { 
+        console.log("test", data);
+        if (data.length > 0) {
             for (let index = 0; index < data.length; index++) {
-                data[index]['password'] = "********";              
+                data[index]['password'] = "********";
             }
             res.send({ "Status": "success", "Data": data });
         }
@@ -88,7 +88,51 @@ app.post('/mainList', (req, res) => {
 });
 
 app.get('/dashboard', (req, res) => {
- res.send("dashboard");
+    res.send("dashboard");
 });
 
+// app.put('/update/:id', (req, res) => {
+//     console.log(req.params.id);
+//     console.log(req.body);
+//     signUpModel.findByIdAndUpdate(req.params.id, res.body, (err, data) => {
+//         if (err)
+//             res.send({ "Status": "failed", "Error": err });
+//         else
+//             res.send({ "Status": "updated", "Data": data });
+//     });
+// });
 
+app.put('/update/:id',(req,res)=>{
+
+    console.log(req.params.id);
+    console.log(req.body);
+    signUpModel.findByIdAndUpdate(req.params.id,req.body,(err,data)=>{
+
+        if (err) return res.status(500).send(err);
+
+        signUpModel.findById(req.params.id,(err,dataAfterUpdate)=>{
+            console.log("data",data);
+            console.log("updateddata",dataAfterUpdate);
+            const response = {
+                Status: "updated",
+                Data: dataAfterUpdate
+            };
+    
+            res.send(response);    
+
+        });
+        
+    });
+
+
+});
+
+app.delete('/delete/:id', (req,res)=>{
+    console.log(req.params.id);
+    signUpModel.findByIdAndRemove(req.params.id,(err,data)=>{
+        if (err)
+            res.send({ "Status": "failed", "Error": err });
+        else
+            res.send({ "Status": "deleted", "Data": data });
+    })
+});

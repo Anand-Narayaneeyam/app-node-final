@@ -296,12 +296,12 @@ var AppService = /** @class */ (function () {
         this.http = http;
     }
     AppService.prototype.signUp = function (data) {
-        // return this.http.post('http://localhost:5000/signup', data);
-        return this.http.post('https://mean-app-anand.herokuapp.com/signup', data);
+        return this.http.post('http://localhost:5000/signup', data);
+        // return this.http.post('https://mean-app-anand.herokuapp.com/signup', data);
     };
     AppService.prototype.login = function (data) {
-        // return this.http.post('http://localhost:5000/login', data);
-        return this.http.post('https://mean-app-anand.herokuapp.com/login', data);
+        return this.http.post('http://localhost:5000/login', data);
+        // return this.http.post('https://mean-app-anand.herokuapp.com/login', data);
     };
     AppService.prototype.getsession = function () {
         if (sessionStorage.getItem('token') != null)
@@ -311,8 +311,16 @@ var AppService = /** @class */ (function () {
     };
     ;
     AppService.prototype.getUsersList = function () {
-        // return this.http.post('http://localhost:5000/mainList','');
-        return this.http.post('https://mean-app-anand.herokuapp.com/mainList', '');
+        return this.http.post('http://localhost:5000/mainList', '');
+        // return this.http.post('https://mean-app-anand.herokuapp.com/mainList','');
+    };
+    AppService.prototype.updateData = function (data, selectedId) {
+        return this.http.put('http://localhost:5000/update/' + selectedId, data);
+        // return this.http.put('https://mean-app-anand.herokuapp.com/update/'+selectedId,data);
+    };
+    AppService.prototype.deleteData = function (selectedId) {
+        return this.http.delete('http://localhost:5000/delete/' + selectedId);
+        // return this.http.delete('https://mean-app-anand.herokuapp.com/delete/'+selectedId);
     };
     AppService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
@@ -335,7 +343,7 @@ module.exports = ""
 /***/ "./src/app/dashboard/dashboard.component.html":
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\" style=\"margin-top: 10px\">\n  <div class=\"col-sm-6\">\n    <h3>Main List</h3>\n    <app-main-list *ngIf=\"isShow\" [dataSet]=\"dataOutput\"></app-main-list>\n  </div>\n  <div class=\"col-sm-6\">\n    <h3>List</h3>\n    <app-list (editEmit)=editClick($event)></app-list>\n  </div>\n</div>"
+module.exports = "<div class=\"row\" style=\"margin-top: 10px\">\n  <div class=\"col-sm-6\">\n    <h3>Main List</h3>\n    <app-main-list *ngIf=\"isShow\" [dataSet]=\"dataOutput\" [selectedId]=\"selectedId\" (updateEmit)=updateClick($event)></app-main-list>\n  </div>\n  <div class=\"col-sm-6\">\n    <h3>List</h3>\n    <app-list (editEmit)=editClick($event)></app-list>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -345,6 +353,7 @@ module.exports = "<div class=\"row\" style=\"margin-top: 10px\">\n  <div class=\
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DashboardComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__list_list_component__ = __webpack_require__("./src/app/list/list.component.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -355,6 +364,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var DashboardComponent = /** @class */ (function () {
     function DashboardComponent() {
         this.isShow = false;
@@ -362,10 +372,18 @@ var DashboardComponent = /** @class */ (function () {
     DashboardComponent.prototype.ngOnInit = function () {
     };
     DashboardComponent.prototype.editClick = function (event) {
-        debugger;
+        this.selectedId = event["Data"]["_id"];
         this.dataOutput = event["Data"];
         this.isShow = true;
     };
+    DashboardComponent.prototype.updateClick = function (event) {
+        this.list.getData();
+        alert("User details Updated");
+    };
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_9" /* ViewChild */])(__WEBPACK_IMPORTED_MODULE_1__list_list_component__["a" /* ListComponent */]),
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1__list_list_component__["a" /* ListComponent */])
+    ], DashboardComponent.prototype, "list", void 0);
     DashboardComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'app-dashboard',
@@ -469,10 +487,11 @@ var ListComponent = /** @class */ (function () {
         this.editEmit = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */]();
     }
     ListComponent.prototype.ngOnInit = function () {
+        this.getData();
+    };
+    ListComponent.prototype.getData = function () {
         var _this = this;
-        debugger;
         this.appService.getUsersList().subscribe(function (data) {
-            debugger;
             if (data['Status'] == "success") {
                 _this.dataArray = data["Data"];
                 _this.editEmit.emit({ "Data": data["Data"][0] });
@@ -485,6 +504,11 @@ var ListComponent = /** @class */ (function () {
         this.editEmit.emit({ "Data": data });
     };
     ListComponent.prototype.deleteClick = function (id) {
+        var _this = this;
+        this.appService.deleteData(id).subscribe(function (data) {
+            alert("User Deleted");
+            _this.getData();
+        });
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["P" /* Output */])(),
@@ -660,6 +684,7 @@ module.exports = "<div id=\"container\" class=\"container\">\n    <!-- <h3 align
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return MainListComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__("./node_modules/@angular/core/esm5/core.js");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_service__ = __webpack_require__("./src/app/app.service.ts");
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -670,19 +695,21 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var MainListComponent = /** @class */ (function () {
-    function MainListComponent() {
+    function MainListComponent(service) {
+        this.service = service;
         this.firstName = "";
         this.lastName = "";
         this.dob = "";
         this.phoneNumber = "";
         this.gender = "";
+        this.updateEmit = new __WEBPACK_IMPORTED_MODULE_0__angular_core__["v" /* EventEmitter */]();
     }
     MainListComponent.prototype.ngOnInit = function () {
     };
     MainListComponent.prototype.ngOnChanges = function (changes) {
         if (changes != undefined) {
-            debugger;
             if (changes.dataSet.currentValue) {
                 this.firstName = changes.dataSet.currentValue.firstName;
                 this.lastName = changes.dataSet.currentValue.lastName;
@@ -692,28 +719,39 @@ var MainListComponent = /** @class */ (function () {
             }
         }
     };
-    MainListComponent.prototype.ngAfterViewInit = function () {
-    };
     MainListComponent.prototype.onEditDetails = function (event) {
+        var _this = this;
+        this.service.updateData(event, this.selectedId).subscribe(function (data) {
+            if (data["Status"] == "updated")
+                _this.updateEmit.emit({ "Data": data["Data"] });
+            else
+                alert("Update failed...");
+        });
     };
     MainListComponent.prototype.resetClick = function (data) {
         if (data != null)
             data.reset();
     };
-    MainListComponent.prototype.radioChange = function (event) {
-        debugger;
-    };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["D" /* Input */])(),
         __metadata("design:type", Object)
     ], MainListComponent.prototype, "dataSet", void 0);
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["D" /* Input */])(),
+        __metadata("design:type", Object)
+    ], MainListComponent.prototype, "selectedId", void 0);
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["P" /* Output */])(),
+        __metadata("design:type", Object)
+    ], MainListComponent.prototype, "updateEmit", void 0);
     MainListComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["n" /* Component */])({
             selector: 'app-main-list',
             template: __webpack_require__("./src/app/main-list/main-list.component.html"),
-            styles: [__webpack_require__("./src/app/main-list/main-list.component.css")]
+            styles: [__webpack_require__("./src/app/main-list/main-list.component.css")],
+            providers: [__WEBPACK_IMPORTED_MODULE_1__app_service__["a" /* AppService */]]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1__app_service__["a" /* AppService */]])
     ], MainListComponent);
     return MainListComponent;
 }());
@@ -881,7 +919,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 
 if (__WEBPACK_IMPORTED_MODULE_3__environments_environment__["a" /* environment */].production) {
-    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_13" /* enableProdMode */])();
+    Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_14" /* enableProdMode */])();
 }
 Object(__WEBPACK_IMPORTED_MODULE_1__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_2__app_app_module__["a" /* AppModule */])
     .catch(function (err) { return console.log(err); });
