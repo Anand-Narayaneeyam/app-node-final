@@ -296,12 +296,12 @@ var AppService = /** @class */ (function () {
         this.http = http;
     }
     AppService.prototype.signUp = function (data) {
-        return this.http.post('http://localhost:5000/signup', data);
-        // return this.http.post('https://mean-app-anand.herokuapp.com/signup', data);
+        // return this.http.post('http://localhost:5000/signup', data);
+        return this.http.post('https://mean-app-anand.herokuapp.com/signup', data);
     };
     AppService.prototype.login = function (data) {
-        return this.http.post('http://localhost:5000/login', data);
-        // return this.http.post('https://mean-app-anand.herokuapp.com/login', data);
+        // return this.http.post('http://localhost:5000/login', data);
+        return this.http.post('https://mean-app-anand.herokuapp.com/login', data);
     };
     AppService.prototype.getsession = function () {
         if (sessionStorage.getItem('token') != null)
@@ -311,16 +311,16 @@ var AppService = /** @class */ (function () {
     };
     ;
     AppService.prototype.getUsersList = function () {
-        return this.http.post('http://localhost:5000/mainList', '');
-        // return this.http.post('https://mean-app-anand.herokuapp.com/mainList','');
+        // return this.http.post('http://localhost:5000/mainList','');
+        return this.http.post('https://mean-app-anand.herokuapp.com/mainList', '');
     };
     AppService.prototype.updateData = function (data, selectedId) {
-        return this.http.put('http://localhost:5000/update/' + selectedId, data);
-        // return this.http.put('https://mean-app-anand.herokuapp.com/update/'+selectedId,data);
+        // return this.http.put('http://localhost:5000/update/'+selectedId,data);
+        return this.http.put('https://mean-app-anand.herokuapp.com/update/' + selectedId, data);
     };
     AppService.prototype.deleteData = function (selectedId) {
-        return this.http.delete('http://localhost:5000/delete/' + selectedId);
-        // return this.http.delete('https://mean-app-anand.herokuapp.com/delete/'+selectedId);
+        // return this.http.delete('http://localhost:5000/delete/'+selectedId);
+        return this.http.delete('https://mean-app-anand.herokuapp.com/delete/' + selectedId);
     };
     AppService = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["A" /* Injectable */])(),
