@@ -138,7 +138,7 @@ app.delete('/delete/:id', (req,res)=>{
 });
 
 
-app.post('/loginApp', (req, res) => {
+app.post('/loginApp/:loginName/:password', (req, res) => {
     signUpModel.find({ 'loginName': req.params.loginName, 'password': req.params.password },(err,data) => {
         console.log("xxx", data);
         if (data.length > 0) {
