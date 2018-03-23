@@ -136,3 +136,17 @@ app.delete('/delete/:id', (req,res)=>{
             res.send({ "Status": "deleted", "Data": data });
     })
 });
+
+
+app.post('/loginApp', (req, res) => {
+    signUpModel.find({ 'loginName': req.body.loginName, 'password': req.body.password }).then((data) => {
+        console.log("xxx", data);
+        if (data.length > 0) {
+            if (data[0]['password'])
+                data[0]['password'] = "******";
+            res.send({ "Status": "success", "session": data });
+        }
+        else
+            res.send({ "Status": "failed" });
+    });
+});
