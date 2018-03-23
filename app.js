@@ -138,8 +138,8 @@ app.delete('/delete/:id', (req,res)=>{
 });
 
 
-app.post('/loginApp/:loginName/:password', (req, res) => {
-    signUpModel.find({ 'loginName': req.params.loginName, 'password': req.params.password },(err,data) => {
+app.post('/loginApp', (req, res) => {
+    signUpModel.find({ 'loginName': req.body.loginName, 'password': req.body.password },(err,data) => {
         console.log("xxx", data);
         if (data.length > 0) {
             if (data[0]['password'])
@@ -147,6 +147,6 @@ app.post('/loginApp/:loginName/:password', (req, res) => {
             res.send({ "Status": "success", "session": data });
         }
         else
-            res.send({ "Status": "failed65654", "session": data, "err": err, "params": req.params });
+            res.send({ "Status": "failed65654", "session": data, "err": err, "params": req.body });
     });
 });
