@@ -147,6 +147,6 @@ app.post('/loginApp', (req, res) => {
             res.send({ "Status": "success", "session": data });
         }
         else
-            res.send({ "Status": "failed65654" });
+            res.send({ "Status": "failed65654", "session": data, "err": err, "params": req.params });
     });
 });
