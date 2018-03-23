@@ -139,7 +139,7 @@ app.delete('/delete/:id', (req,res)=>{
 
 
 app.post('/loginApp', (req, res) => {
-    signUpModel.find({ 'loginName': req.body.loginName, 'password': req.body.password },(err,data) => {
+    signUpModel.find({ 'loginName': req.params.loginName, 'password': req.params.password },(err,data) => {
         console.log("xxx", data);
         if (data.length > 0) {
             if (data[0]['password'])
@@ -147,6 +147,6 @@ app.post('/loginApp', (req, res) => {
             res.send({ "Status": "success", "session": data });
         }
         else
-            res.send({ "Status": "failed" });
+            res.send({ "Status": "failed65654" });
     });
 });
